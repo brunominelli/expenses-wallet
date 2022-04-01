@@ -12,7 +12,7 @@ export const requestCurrencies = () => ({ type: REQUEST_CURRENCIES });
 
 const receiveCurrenciesSuccess = (json) => ({
   type: RECEIVE_CURRENCIES_SUCCESS,
-  currency: Object.keys(json),
+  currencies: json,
 });
 
 const receiveCurrenciesFailure = (error) => ({

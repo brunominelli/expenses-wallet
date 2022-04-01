@@ -5,9 +5,8 @@ import { fetchCurrency } from '../actions';
 
 class Wallet extends React.Component {
   componentDidMount() {
-    const { dispatch, currencies } = this.props;
+    const { dispatch } = this.props;
     dispatch(fetchCurrency());
-    console.log(currencies);
   }
 
   render() {
@@ -30,7 +29,6 @@ const mapStateToProps = (state) => ({
 
 Wallet.propTypes = {
   email: propTypes.string.isRequired,
-  currencies: propTypes.arrayOf(propTypes.string).isRequired,
   dispatch: propTypes.func.isRequired,
 };
 

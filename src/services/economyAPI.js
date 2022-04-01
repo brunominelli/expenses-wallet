@@ -5,7 +5,10 @@ const fetchCurrencyAPI = () => {
       response
         .json()
         .then(
-          (json) => json,
+          (json) => Object.keys(json).reduce((acc, curr) => {
+            if (curr !== 'USDT') acc.push(curr);
+            return acc;
+          }, []),
         )));
 };
 
