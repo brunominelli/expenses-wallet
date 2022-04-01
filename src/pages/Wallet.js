@@ -4,6 +4,8 @@ import { connect } from 'react-redux';
 import { fetchCurrency, setExpense } from '../actions';
 import checkoutMethods from '../data/checkoutMethods';
 import categories from '../data/categories';
+import Header from '../components/Header';
+import fetchCurrencyAPI from '../services/economyAPI';
 
 class Wallet extends React.Component {
   constructor() {
@@ -37,11 +39,11 @@ class Wallet extends React.Component {
     const { value, currency, method, tag, description } = this.state;
     const { dispatchExpenses, expenses } = this.props;
     const id = expenses.length;
-    const expense = { id, value, currency, method, tag, description };
-
+    const exchangeRates = {};
+    const expense = { id, value, currency, method, tag, description, exchangeRates };
     expenses.push(expense);
+    fetchCurrencyAPI().then((json) => console.log(json[currency]));
     dispatchExpenses(expenses);
-
     this.setState({
       value: '0',
       currency: 'USD',
@@ -64,16 +66,7 @@ class Wallet extends React.Component {
     const total = this.handleTotalExpenses();
     return (
       <>
-        <header className="header">
-          <h1>TrybeWallet</h1>
-          <div className="row">
-            <p data-testid="email-field">{ `Olá, ${email}` }</p>
-            <p data-testid="total-field">
-              {`Despesa Total: R$ ${total}`}
-            </p>
-            <p data-testid="header-currency-field">BRL</p>
-          </div>
-        </header>
+        <Header email={ email } total={ total } />
         <form className="row">
           <label htmlFor="description-input" className="label">
             Descrição

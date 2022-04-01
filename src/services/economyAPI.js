@@ -8,5 +8,6 @@ const fetchCurrencyAPI = () => {
           (json) => json,
         )));
 };
+
 fetchCurrencyAPI().then((json) => console.log(json));
 export default fetchCurrencyAPI;
