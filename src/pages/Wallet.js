@@ -23,63 +23,61 @@ class Wallet extends React.Component {
           <h1>TrybeWallet</h1>
           <div className="row">
             <p data-testid="email-field">{ `Olá, ${email}` }</p>
-            {' '}
             <p data-testid="total-field">{`Despesa Total: R$ ${0}`}</p>
-            {' '}
             <p data-testid="header-currency-field">BRL</p>
           </div>
         </header>
-        <form>
-          <label htmlFor="description-input">
-            Descrição:
-            {' '}
+        <form className="row">
+          <label htmlFor="description-input" className="label">
+            Descrição
             <input
               type="text"
               id="description-input"
               name="description-input"
               data-testid="description-input"
+              className="form-input"
             />
           </label>
-          <label htmlFor="tag-input">
-            Categoria:
-            {' '}
+          <label htmlFor="tag-input" className="label">
+            Categoria
             <select
               id="tag-input"
               name="tag-input"
               data-testid="tag-input"
+              className="form-input"
             >
               { categories.map((category) => (
                 <option key={ category } value={ category }>{category}</option>))}
             </select>
           </label>
-          <label htmlFor="value-input">
-            Valor:
-            {' '}
+          <label htmlFor="value-input" className="label">
+            Valor
             <input
               type="text"
               id="value-input"
               name="value-input"
               data-testid="value-input"
+              className="form-input"
             />
           </label>
-          <label htmlFor="currency-input">
-            Moeda:
-            {' '}
+          <label htmlFor="currency-input" className="label">
+            Moeda
             <select
               id="currency-input"
               name="currency-input"
+              className="form-input"
             >
               { currencies.map((currency) => (
                 <option key={ currency } value={ currency }>{currency}</option>))}
             </select>
           </label>
-          <label htmlFor="method-input">
-            Método de Pagamento:
-            {' '}
+          <label htmlFor="method-input" className="label">
+            Método de Pagamento
             <select
               id="method-input"
               name="method-input"
               data-testid="method-input"
+              className="form-input"
             >
               { checkoutMethods.map((checkout) => (
                 <option key={ checkout } value={ checkout }>{checkout}</option>))}
