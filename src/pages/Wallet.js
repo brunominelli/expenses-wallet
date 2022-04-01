@@ -19,11 +19,15 @@ class Wallet extends React.Component {
     const { email, currencies } = this.props;
     return (
       <>
-        <header>
+        <header className="header">
           <h1>TrybeWallet</h1>
-          <p data-testid="email-field">{ `Olá, ${email}` }</p>
-          <p data-testid="total-field">0</p>
-          <p data-testid="header-currency-field">BRL</p>
+          <div className="row">
+            <p data-testid="email-field">{ `Olá, ${email}` }</p>
+            {' '}
+            <p data-testid="total-field">{`Despesa Total: R$ ${0}`}</p>
+            {' '}
+            <p data-testid="header-currency-field">BRL</p>
+          </div>
         </header>
         <form>
           <label htmlFor="description-input">
