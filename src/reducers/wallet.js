@@ -2,6 +2,7 @@ import {
   REQUEST_CURRENCIES,
   RECEIVE_CURRENCIES_FAILURE,
   RECEIVE_CURRENCIES_SUCCESS,
+  SET_EXPENSE,
 } from '../actions';
 
 // Esse reducer será responsável por tratar o todas as informações relacionadas as despesas
@@ -29,6 +30,11 @@ const wallet = (state = INITIAL_STATE, action) => {
       ...state,
       error: action.error,
       isFetching: false,
+    };
+  case SET_EXPENSE:
+    return {
+      ...state,
+      expenses: action.expense,
     };
   default:
     return state;
