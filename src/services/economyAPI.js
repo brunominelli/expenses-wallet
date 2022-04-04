@@ -5,9 +5,8 @@ const fetchCurrencyAPI = () => {
       response
         .json()
         .then(
-          (json) => json,
+          (json) => ((response.ok) ? Promise.resolve(json) : Promise.reject(json)),
         )));
 };
 
-fetchCurrencyAPI().then((json) => console.log(json));
 export default fetchCurrencyAPI;

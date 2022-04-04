@@ -22,7 +22,8 @@ const wallet = (state = INITIAL_STATE, action) => {
   case RECEIVE_CURRENCIES_SUCCESS:
     return {
       ...state,
-      currencies: action.currencies,
+      currencies: Object.keys(action.currencies)
+        .filter((currency) => currency !== 'USDT'),
       isFetching: false,
     };
   case RECEIVE_CURRENCIES_FAILURE:

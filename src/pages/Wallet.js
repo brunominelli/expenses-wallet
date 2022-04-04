@@ -6,6 +6,7 @@ import checkoutMethods from '../data/checkoutMethods';
 import categories from '../data/categories';
 import Header from '../components/Header';
 import fetchCurrencyAPI from '../services/economyAPI';
+import tableHeaders from '../data/tableHeaders';
 
 class Wallet extends React.Component {
   constructor() {
@@ -20,37 +21,44 @@ class Wallet extends React.Component {
   }
 
   componentDidMount() {
-    this.handleCurrencies();
-  }
-
-  handleCurrencies = () => {
     const { dispatchCurrencies } = this.props;
     dispatchCurrencies();
   }
 
   handleTotalExpenses = () => {
     const { expenses } = this.props;
-    const totalExpenses = expenses
-      .reduce((total, price) => total + parseInt(price.value, 10), 0);
-    return totalExpenses;
+    const result = expenses.map((expense) => {
+      const total = +expense.value * +expense.exchangeRates[expense.currency].ask;
+      return total;
+    });
+    return result.reduce((acc, curr) => acc + curr, 0);
   }
 
-  handleSetExpenses = () => {
+  handleAddButton = async () => {
     const { value, currency, method, tag, description } = this.state;
-    const { dispatchExpenses, expenses } = this.props;
+    const { dispatchExpense, expenses } = this.props;
     const id = expenses.length;
-    const exchangeRates = {};
-    const expense = { id, value, currency, method, tag, description, exchangeRates };
-    expenses.push(expense);
-    fetchCurrencyAPI().then((json) => console.log(json[currency]));
-    dispatchExpenses(expenses);
+    const object = {
+      id,
+      value,
+      currency,
+      method,
+      tag,
+      description,
+      exchangeRates: await fetchCurrencyAPI().then((json) => json),
+    };
+
+    expenses.push(object);
+    dispatchExpense(expenses);
     this.setState({
       value: '0',
       currency: 'USD',
       method: 'Cartão de Crédito',
       tag: 'Alimentação',
       description: '',
-    }, this.handleTotalExpenses);
+    });
+
+    this.handleTotalExpenses();
   }
 
   handleChange = ({ target }) => {
@@ -135,30 +143,30 @@ class Wallet extends React.Component {
           </label>
           <button
             type="button"
-            onClick={ this.handleSetExpenses }
+            onClick={ this.handleAddButton }
             className="btn"
           >
-            Adicionar despesa
+            Adicionar Despesa
           </button>
         </form>
-        <section>
-          <div className="row">
-            <h2>Descrição</h2>
-            <h2>Categoria</h2>
-            <h2>Valor</h2>
-            <h2>Moeda</h2>
-            <h2>Método de Pagamento</h2>
-          </div>
-          { expenses.map((expense) => (
-            <div key={ expense.id } className="row">
-              <p>{`${expense.description}`}</p>
-              <p>{`${expense.tag}`}</p>
-              <p>{`${expense.value}`}</p>
-              <p>{`${expense.currency}`}</p>
-              <p>{`${expense.method}`}</p>
-            </div>
-          )) }
-        </section>
+        <table>
+          <thead>
+            <tr>
+              { tableHeaders.map((header) => <th key={ header }>{header}</th>)}
+            </tr>
+          </thead>
+          <tbody>
+            { expenses.map((expense) => (
+              <tr key={ expense.id }>
+                <td>{`${expense.description}`}</td>
+                <td>{`${expense.tag}`}</td>
+                <td>{`${expense.value}`}</td>
+                <td>{`${expense.currency}`}</td>
+                <td>{`${expense.method}`}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
       </>
     );
   }
@@ -172,7 +180,7 @@ const mapStateToProps = (state) => ({
 
 const mapDispatchToProps = (dispatch) => ({
   dispatchCurrencies: () => dispatch(fetchCurrency()),
-  dispatchExpenses: (expenses) => dispatch(setExpense(expenses)),
+  dispatchExpense: (expense) => dispatch(setExpense(expense)),
 });
 
 Wallet.propTypes = {
@@ -180,7 +188,7 @@ Wallet.propTypes = {
   currencies: propTypes.arrayOf(propTypes.string).isRequired,
   expenses: propTypes.arrayOf(propTypes.any).isRequired,
   dispatchCurrencies: propTypes.func.isRequired,
-  dispatchExpenses: propTypes.func.isRequired,
+  dispatchExpense: propTypes.func.isRequired,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Wallet);

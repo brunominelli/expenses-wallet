@@ -11,7 +11,7 @@ class Header extends React.Component {
         <div className="row">
           <p data-testid="email-field">{ `Olá, ${email}` }</p>
           <p data-testid="total-field">
-            {`Despesa Total: R$ ${total}`}
+            {total.toFixed(2)}
           </p>
           <p data-testid="header-currency-field">BRL</p>
         </div>
