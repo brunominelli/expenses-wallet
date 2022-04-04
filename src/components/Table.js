@@ -4,9 +4,9 @@ import tableHeaders from '../data/tableHeaders';
 
 class Table extends React.Component {
   render() {
-    const { expenses } = this.props;
+    const { expenses, handleDeleteButton } = this.props;
     return (
-      <table>
+      <table className="table">
         <thead>
           <tr>
             { tableHeaders.map((header) => <th key={ header }>{header}</th>)}
@@ -39,6 +39,17 @@ class Table extends React.Component {
                 }
               </td>
               <td>Real</td>
+              <td>
+                <button
+                  type="button"
+                  data-testid="delete-btn"
+                  value={ expense.id }
+                  onClick={ (e) => handleDeleteButton(e.target.value) }
+                  className="btn"
+                >
+                  Excluir
+                </button>
+              </td>
             </tr>
           ))}
         </tbody>

@@ -61,6 +61,15 @@ class Wallet extends React.Component {
     this.handleTotalExpenses();
   }
 
+  handleDeleteButton = (id) => {
+    const { dispatchExpense, expenses } = this.props;
+    const newExpenses = expenses.reduce((acc, curr) => {
+      if (curr.id !== +id) acc.push(curr);
+      return acc;
+    }, []);
+    dispatchExpense(newExpenses);
+  }
+
   handleChange = ({ target }) => {
     const { name, value } = target;
     this.setState({
@@ -149,7 +158,7 @@ class Wallet extends React.Component {
             Adicionar Despesa
           </button>
         </form>
-        <Table expenses={ expenses } />
+        <Table expenses={ expenses } handleDeleteButton={ this.handleDeleteButton } />
       </>
     );
   }

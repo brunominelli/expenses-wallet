@@ -32,6 +32,11 @@
   width: 100%;
 }
 
+.table {
+  width: 100%;
+  text-align: center;
+}
+
 .btn {
   padding: 8px;
 }
