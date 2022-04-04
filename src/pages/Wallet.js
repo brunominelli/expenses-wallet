@@ -6,7 +6,7 @@ import checkoutMethods from '../data/checkoutMethods';
 import categories from '../data/categories';
 import Header from '../components/Header';
 import fetchCurrencyAPI from '../services/economyAPI';
-import tableHeaders from '../data/tableHeaders';
+import Table from '../components/Table';
 
 class Wallet extends React.Component {
   constructor() {
@@ -149,24 +149,7 @@ class Wallet extends React.Component {
             Adicionar Despesa
           </button>
         </form>
-        <table>
-          <thead>
-            <tr>
-              { tableHeaders.map((header) => <th key={ header }>{header}</th>)}
-            </tr>
-          </thead>
-          <tbody>
-            { expenses.map((expense) => (
-              <tr key={ expense.id }>
-                <td>{`${expense.description}`}</td>
-                <td>{`${expense.tag}`}</td>
-                <td>{`${expense.value}`}</td>
-                <td>{`${expense.currency}`}</td>
-                <td>{`${expense.method}`}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <Table expenses={ expenses } />
       </>
     );
   }
