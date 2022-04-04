@@ -61,6 +61,22 @@ class Wallet extends React.Component {
     this.handleTotalExpenses();
   }
 
+  handleUpdateButton = (id) => {
+    const { expenses } = this.props;
+
+    const descriptionInput = document.getElementById('description-input');
+    const tagInput = document.getElementById('tag-input');
+    const valueInput = document.getElementById('value-input');
+    const currencyInput = document.getElementById('currency-input');
+    const methodInput = document.getElementById('method-input');
+
+    descriptionInput.value = expenses[id].description;
+    tagInput.value = expenses[id].tag;
+    valueInput.value = expenses[id].value;
+    currencyInput.value = expenses[id].currency;
+    methodInput.value = expenses[id].method;
+  }
+
   handleDeleteButton = (id) => {
     const { dispatchExpense, expenses } = this.props;
     const newExpenses = expenses.reduce((acc, curr) => {
@@ -158,7 +174,11 @@ class Wallet extends React.Component {
             Adicionar Despesa
           </button>
         </form>
-        <Table expenses={ expenses } handleDeleteButton={ this.handleDeleteButton } />
+        <Table
+          expenses={ expenses }
+          handleDeleteButton={ this.handleDeleteButton }
+          handleUpdateButton={ this.handleUpdateButton }
+        />
       </>
     );
   }

@@ -8,7 +8,7 @@
 
 .row {
   display: flex;
-  flex-flow: row wrap;
+  flex-flow: row nowrap;
   align-items: center;
   justify-content: space-around;
 }
@@ -24,6 +24,8 @@
   flex-direction: column;
   align-items: center;
   justify-content: space-evenly;
+  text-align: center;
+  width: 100%;
   padding: 8px;
 }
 
@@ -38,5 +40,7 @@
 }
 
 .btn {
+  width: 100%;
+  margin: 8px;
   padding: 8px;
 }

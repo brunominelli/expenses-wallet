@@ -4,7 +4,7 @@ import tableHeaders from '../data/tableHeaders';
 
 class Table extends React.Component {
   render() {
-    const { expenses, handleDeleteButton } = this.props;
+    const { expenses, handleDeleteButton, handleUpdateButton } = this.props;
     return (
       <table className="table">
         <thead>
@@ -39,7 +39,16 @@ class Table extends React.Component {
                 }
               </td>
               <td>Real</td>
-              <td>
+              <td className="row">
+                <button
+                  type="button"
+                  data-testid="edit-btn"
+                  value={ expense.id }
+                  onClick={ (e) => handleUpdateButton(e.target.value) }
+                  className="btn"
+                >
+                  Editar
+                </button>
                 <button
                   type="button"
                   data-testid="delete-btn"
@@ -61,6 +70,7 @@ class Table extends React.Component {
 Table.propTypes = {
   expenses: propTypes.arrayOf(propTypes.any).isRequired,
   handleDeleteButton: propTypes.func.isRequired,
+  handleUpdateButton: propTypes.func.isRequired,
 };
 
 export default Table;
