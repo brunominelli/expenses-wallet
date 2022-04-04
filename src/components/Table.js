@@ -60,6 +60,7 @@ class Table extends React.Component {
 
 Table.propTypes = {
   expenses: propTypes.arrayOf(propTypes.any).isRequired,
+  handleDeleteButton: propTypes.func.isRequired,
 };
 
 export default Table;
