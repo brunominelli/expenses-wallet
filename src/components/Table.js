@@ -43,7 +43,7 @@ class Table extends React.Component {
                 <button
                   type="button"
                   data-testid="edit-btn"
-                  value={ expense.id }
+                  value={ +expense.id }
                   onClick={ (e) => handleUpdateButton(e.target.value) }
                   className="btn"
                 >
@@ -52,7 +52,7 @@ class Table extends React.Component {
                 <button
                   type="button"
                   data-testid="delete-btn"
-                  value={ expense.id }
+                  value={ +expense.id }
                   onClick={ (e) => handleDeleteButton(e.target.value) }
                   className="btn"
                 >

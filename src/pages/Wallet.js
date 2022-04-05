@@ -17,6 +17,7 @@ class Wallet extends React.Component {
       method: 'Cartão de Crédito',
       tag: 'Alimentação',
       description: '',
+      isHidden: false,
     };
   }
 
@@ -61,20 +62,22 @@ class Wallet extends React.Component {
     this.handleTotalExpenses();
   }
 
+  handleUpdateExpense = () => {
+    this.setState({
+      isHidden: false,
+    });
+  }
+
   handleUpdateButton = (id) => {
     const { expenses } = this.props;
-
-    const descriptionInput = document.getElementById('description-input');
-    const tagInput = document.getElementById('tag-input');
-    const valueInput = document.getElementById('value-input');
-    const currencyInput = document.getElementById('currency-input');
-    const methodInput = document.getElementById('method-input');
-
-    descriptionInput.value = expenses[id].description;
-    tagInput.value = expenses[id].tag;
-    valueInput.value = expenses[id].value;
-    currencyInput.value = expenses[id].currency;
-    methodInput.value = expenses[id].method;
+    this.setState({
+      value: expenses[id].value,
+      currency: expenses[id].currency,
+      method: expenses[id].method,
+      tag: expenses[id].tag,
+      description: expenses[id].description,
+      isHidden: true,
+    });
   }
 
   handleDeleteButton = (id) => {
@@ -94,7 +97,7 @@ class Wallet extends React.Component {
   }
 
   render() {
-    const { value, currency, method, tag, description } = this.state;
+    const { value, currency, method, tag, description, isHidden } = this.state;
     const { email, currencies, expenses } = this.props;
     const total = this.handleTotalExpenses();
     return (
@@ -170,8 +173,17 @@ class Wallet extends React.Component {
             type="button"
             onClick={ this.handleAddButton }
             className="btn"
+            hidden={ isHidden }
           >
             Adicionar Despesa
+          </button>
+          <button
+            type="button"
+            className="btn"
+            onClick={ this.handleUpdateExpense }
+            hidden={ !isHidden }
+          >
+            Editar Despesa
           </button>
         </form>
         <Table
