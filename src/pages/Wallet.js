@@ -62,7 +62,21 @@ class Wallet extends React.Component {
     this.handleTotalExpenses();
   }
 
-  handleUpdateExpense = () => {
+  handleEditExpense = () => {
+    const { id, value, currency, method, tag, description } = this.state;
+    const { dispatchExpense, expenses } = this.props;
+    const object = {
+      id,
+      value,
+      currency,
+      method,
+      tag,
+      description,
+      exchangeRates: expenses[id].exchangeRates,
+    };
+    const editExpenses = expenses.map((expense) => (
+      (expense.id === id) ? object : expense));
+    dispatchExpense(editExpenses);
     this.setState({
       isHidden: false,
     });
@@ -70,12 +84,14 @@ class Wallet extends React.Component {
 
   handleUpdateButton = (id) => {
     const { expenses } = this.props;
+    const selectedExpense = expenses[id];
     this.setState({
-      value: expenses[id].value,
-      currency: expenses[id].currency,
-      method: expenses[id].method,
-      tag: expenses[id].tag,
-      description: expenses[id].description,
+      id: selectedExpense.id,
+      value: selectedExpense.value,
+      currency: selectedExpense.currency,
+      method: selectedExpense.method,
+      tag: selectedExpense.tag,
+      description: selectedExpense.description,
       isHidden: true,
     });
   }
@@ -146,6 +162,7 @@ class Wallet extends React.Component {
             Moeda
             <select
               id="currency-input"
+              data-testid="currency-input"
               name="currency"
               value={ currency }
               onChange={ this.handleChange }
@@ -180,7 +197,7 @@ class Wallet extends React.Component {
           <button
             type="button"
             className="btn"
-            onClick={ this.handleUpdateExpense }
+            onClick={ this.handleEditExpense }
             hidden={ !isHidden }
           >
             Editar Despesa
